@@ -2,6 +2,7 @@ var express = require('express');
 var app  = express();
 var bodyParser = require('body-parser');
 var https=require('https');
+var Promise = require('promise');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -20,7 +21,7 @@ var count=0;
 router.route('/api/:username')
         .get(function(req, res){
             var userName = req.params.username;
-
+            console.log(userName);
             var optionGit = {
                 host: 'api.github.com',
                 path: '/users/'+userName+'/repos',
@@ -85,7 +86,7 @@ router.route('/api/:username')
                                     var value2 = obj2[key2];
                                     console.log(h+' '+key2);
                                     var data = {
-                                        repo: repos[a],
+                                        repo: repos[g],
                                         languages: key2
                                     }
                                 }
