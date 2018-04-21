@@ -1,0 +1,21 @@
+{
+  "name": "githubapi",
+  "version": "1.0.0",
+  "description": "an api to tell you about the technologies used by you in all your github projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "github",
+    "language"
+  ],
+  "author": "aditya",
+  "license": "ISC",
+  "dependencies": {
+    "express": "~4.15.5",
+    "body-parser": "~1.18.2",
+    "request": "^2.83.0",
+    "promise": "~8.0.1"
+  }
+}
