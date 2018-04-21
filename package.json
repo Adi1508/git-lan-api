@@ -4,7 +4,7 @@
   "description": "an api to tell you about the technologies used by you in all your github projects",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "keywords": [
     "github",
