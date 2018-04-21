@@ -101,6 +101,11 @@ router.route('/api/:username')
             request.end();
         });
 
+        router.route('/api')
+            .get(function(req, res){
+                res.json({message: 'Welcome to git-lan-api, to use the API please pass your username in the url with the API'})
+            });
+
 //register the routes
 app.use('/v1', router);
 
