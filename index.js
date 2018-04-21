@@ -2,7 +2,6 @@ var express = require('express');
 var app  = express();
 var bodyParser = require('body-parser');
 var https=require('https');
-var Promise = require('promise');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -17,16 +16,6 @@ router.use(function(req, res, next){
 });
 
 var count=0;
-
-var promise = new Promise(function(resolve, reject){
-    if(success){
-        resolve(data);
-    } else {
-        reject(reason);
-    }
-});
-    
-
 
 router.route('/api/:username')
         .get(function(req, res){
