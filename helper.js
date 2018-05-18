@@ -1,22 +1,27 @@
 var helpers = {};
+var https   = require('https');
 
 helpers.getRepos = (username)=>{
   return new Promise( (resolve, reject) => {
     var repos = [];
 
     var optionGit = {
-        host: 'api.github.com',
-        path: '/users/'+username+'/repos',
-        method: 'GET',
-        headers: {'user-agent' : 'node.js'}
+        'protocol' : 'https:',
+        'hostname': 'api.github.com',
+        'path': '/users/'+username+'/repos',
+        'method': 'GET',
+        'headers': {'user-agent' : 'node.js'}
     };
 
-    var request = https.request(optionGit, (response)=>{
-        console.log('inside request 1');
-        response.on('data', function(chunk){
-            body+=chunk.toString('utf8');
-        });
-        response.on('end', ()=>{
+    var request = https.request(optionGit,(response)=>{
+       
+ 
+           var body = ''; 
+          response.on('data', function(chunk){
+              body+=chunk.toString('utf8');
+          });
+        
+         response.on('end', ()=>{
             var obj = JSON.parse(body.toString());
 
             var keys = Object.keys(obj);
@@ -30,13 +35,21 @@ helpers.getRepos = (username)=>{
                 }
                 repos.push(subValues);
             }
+            resolve(repos);
         });
-     });
-     console.log(repos);
-     request.end();
-  });
-  resolve(repos);
-}
+   
+    }); 
+
+     // Bind to the error event so it doesn't get thrown
+        request.on('error',function(e){
+          reject(e);
+        });
+
+      request.end();
+   });
+
+ }
+
 
 helpers.getInfo = (repo) => {
     return new Promise( (resolve, reject) => {
@@ -77,7 +90,10 @@ helpers.getInfo = (repo) => {
                 console.log(JSON.stringify(o));
             });
         });
+
+
         request2.end();
+        resolve(o);
     });
 }
 

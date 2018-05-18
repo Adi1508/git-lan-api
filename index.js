@@ -24,8 +24,9 @@ router.route('/api/:username')
         var userName = req.params.username;
         console.log(userName);
            
-        var reposObject = helpers.getRepos(userName).then(()=>{
+        /*var reposObject = */helpers.getRepos(userName).then((reposObject)=>{
             console.log("repos object: "+reposObject);
+            res.json(reposObject);
         }).catch((err)=>{
             res.json({"reponse":false});
         });
