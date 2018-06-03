@@ -13,9 +13,12 @@
   "author": "aditya",
   "license": "ISC",
   "dependencies": {
-    "express": "~4.15.5",
+    "async": "^2.6.1",
     "body-parser": "~1.18.2",
-    "request": "^2.83.0",
-    "promise": "~8.0.1"
+    "events": "^3.0.0",
+    "express": "~4.15.5",
+    "fibers": "^2.0.2",
+    "promise": "~8.0.1",
+    "request": "^2.83.0"
   }
 }
