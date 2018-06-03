@@ -47,11 +47,11 @@ helpers.getRepos = (username) => {
                     repos.push(subValues);
                 }
                 console.log(repos);
-                return repos;
+                resolve(repos);
             });
         });
         request.end();
-
+      
     }).then((repos)=>{
 
         var reps = JSON.stringify(repos);
@@ -59,9 +59,41 @@ helpers.getRepos = (username) => {
 
         console.log('first then: '+reposArray);
 
-    }).then(()=>{
+        var o = {};
+            var key = 'lan';
+            o[key] = [];
 
-    });
+        for (var i = 0; i < reposArray.length; i++) {
+
+            var optionGitLanguage = {
+                host: 'api.github.com',
+                path: '/repos/' + username + '/' + reposArray[i] + '/languages',
+                method: 'GET',
+                headers: {
+                    'user-agent': 'node.js',
+                    'Authorization': 'token '
+                }
+            };
+
+            var request2 = https.request(optionGitLanguage, function (response) {
+
+                var body2 = '';
+                response.on('data', function (chunk) {
+                    body2 += chunk.toString('utf8');
+                });
+                response.on('end', function () {
+                    o[key].push(JSON.stringify(body2));
+                });
+            });
+            request2.end();
+        }
+        console.log(o);
+
+    }).then((array)=>{
+        
+        console.log("second then: "+array);
+
+    })
 
 
     /*return new Promise((resolve, reject) => {
