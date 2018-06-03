@@ -6,7 +6,10 @@ var fiber = require("fibers");
 //var repData = new EventEmitter();
 
 helpers.getRepos = (username) => {
-    return new Promise((resolve, reject) => {
+
+
+    return new Promise((resolve, reject)=>{
+
         var repos = [];
 
         var optionGit = {
@@ -16,11 +19,9 @@ helpers.getRepos = (username) => {
             'method': 'GET',
             'headers': {
                 'user-agent': 'node.js',
-                'Authorization': 'token 48284cb2a28e434813ae926bfdedd9f8236aa692'
+                'Authorization': 'token '
             }
         };
-
-        //console.log(optionGit.path);
 
         var request = https.request(optionGit, (response) => {
 
@@ -45,8 +46,31 @@ helpers.getRepos = (username) => {
                     }
                     repos.push(subValues);
                 }
-                var reps = JSON.stringify(repos);
-                var reposArray = JSON.parse(reps);
+                console.log(repos);
+                return repos;
+            });
+        });
+        request.end();
+
+    }).then((repos)=>{
+
+        var reps = JSON.stringify(repos);
+        var reposArray = JSON.parse(reps);
+
+        console.log('first then: '+reposArray);
+
+    }).then(()=>{
+
+    });
+
+
+    /*return new Promise((resolve, reject) => {
+        
+
+        //console.log(optionGit.path);
+
+        
+                
 
                 //console.log(reposArray);
 
@@ -90,17 +114,17 @@ helpers.getRepos = (username) => {
                 })*/
                 //resolve(repos);
 
-            });
+            //});
 
-        });
+        //});
 
         // Bind to the error event so it doesn't get thrown
-        request.on('error', function (e) {
-            reject(e);
-        });
+        //request.on('error', function (e) {
+          //  reject(e);
+        //});
 
-        request.end();
-    });
+        //request.end();
+    //});
 
 }
 
