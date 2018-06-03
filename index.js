@@ -27,10 +27,10 @@ router.route('/api/:username')
         console.log(userName);
         var infoGet;
         helpers.getRepos(userName).then((reposObject)=>{
-            console.log(reposObject);
+            //console.log(reposObject);
             infoGet = JSON.stringify(reposObject);
             console.log("infoGet : "+ infoGet); 
-            res.json(JSON.parse(infoGet));
+            //res.json(JSON.parse(infoGet));
         }).catch((err)=>{
             res.json(err);
         });

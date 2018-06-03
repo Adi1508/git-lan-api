@@ -5,10 +5,14 @@ var fiber = require("fibers");
 //var EventEmitter = require("events").EventEmitter;
 //var repData = new EventEmitter();
 
+var o = {};
+var key = 'lan';
+o[key] = [];
+
 helpers.getRepos = (username) => {
 
 
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
 
         var repos = [];
 
@@ -51,49 +55,54 @@ helpers.getRepos = (username) => {
             });
         });
         request.end();
-      
-    }).then((repos)=>{
+
+    }).then((repos) => {
 
         var reps = JSON.stringify(repos);
         var reposArray = JSON.parse(reps);
 
-        console.log('first then: '+reposArray);
+        console.log('first then: ' + reposArray);
+        var i =0;
 
-        var o = {};
-            var key = 'lan';
-            o[key] = [];
+        while(i<reposArray.length){
 
-        for (var i = 0; i < reposArray.length; i++) {
+            return new Promise((resolve, reject)=>{
 
-            var optionGitLanguage = {
-                host: 'api.github.com',
-                path: '/repos/' + username + '/' + reposArray[i] + '/languages',
-                method: 'GET',
-                headers: {
-                    'user-agent': 'node.js',
-                    'Authorization': 'token '
-                }
-            };
-
-            var request2 = https.request(optionGitLanguage, function (response) {
-
-                var body2 = '';
-                response.on('data', function (chunk) {
-                    body2 += chunk.toString('utf8');
+                var optionGitLanguage = {
+                    host: 'api.github.com',
+                    path: '/repos/' + username + '/' + reposArray[i] + '/languages',
+                    method: 'GET',
+                    headers: {
+                        'user-agent': 'node.js',
+                        'Authorization': 'token '
+                    }
+                };
+    
+                console.log(optionGitLanguage);
+    
+                var request2 = https.request(optionGitLanguage, function (response) {
+    
+                    var body2 = '';
+                    response.on('data', function (chunk) {
+                        body2 += chunk.toString('utf8');
+                    });
+                    response.on('end', function () {
+                        o[key].push(JSON.stringify(body2));
+                    });
                 });
-                response.on('end', function () {
-                    o[key].push(JSON.stringify(body2));
-                });
+                request2.end();
+
+            }).then(()=>{
+                i++;
             });
-            request2.end();
         }
+
+    }).then(() => {
         console.log(o);
-
-    }).then((array)=>{
-        
-        console.log("second then: "+array);
-
-    })
+        abc = "abc";
+        console.log("second then: " + JSON.stringify(abc));
+        return abc;
+    });
 
 
     /*return new Promise((resolve, reject) => {
@@ -144,18 +153,18 @@ helpers.getRepos = (username) => {
                 /*repData.on('update', function () {
                     console.log(repData);
                 })*/
-                //resolve(repos);
+    //resolve(repos);
 
-            //});
+    //});
 
-        //});
+    //});
 
-        // Bind to the error event so it doesn't get thrown
-        //request.on('error', function (e) {
-          //  reject(e);
-        //});
+    // Bind to the error event so it doesn't get thrown
+    //request.on('error', function (e) {
+    //  reject(e);
+    //});
 
-        //request.end();
+    //request.end();
     //});
 
 }
