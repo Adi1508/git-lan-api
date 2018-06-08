@@ -13,7 +13,7 @@ helpers.getRepos = (username) => {
             'method': 'GET',
             'headers': {
                 'user-agent': 'node.js',
-                'Authorization': 'token '
+                'Authorization': 'token 224970f5fee2c66066d67ab9f8584b6d006c6135'
             }
         };
 
