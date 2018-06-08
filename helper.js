@@ -2,12 +2,7 @@ var helpers = {};
 var https = require('https');
 var async = require("async");
 var fiber = require("fibers");
-//var EventEmitter = require("events").EventEmitter;
-//var repData = new EventEmitter();
-
-var o = {};
-var key = 'lan';
-o[key] = [];
+var http = require('http'); 
 
 helpers.getRepos = (username) => {
 
@@ -15,7 +10,6 @@ helpers.getRepos = (username) => {
     return new Promise((resolve, reject) => {
 
         var repos = [];
-
         var optionGit = {
             'protocol': 'https:',
             'hostname': 'api.github.com',
@@ -50,194 +44,68 @@ helpers.getRepos = (username) => {
                     }
                     repos.push(subValues);
                 }
-                console.log(repos);
+                //console.log(repos);
                 resolve(repos);
             });
         });
         request.end();
 
     }).then((repos) => {
-
+        //console.log('user: '+username);
         var reps = JSON.stringify(repos);
         var reposArray = JSON.parse(reps);
 
-        console.log('first then: ' + reposArray);
+        //console.log('first then: ' +username+ reposArray);
+
+        var flag=null;
+        var o = {};
+        var key = 'lan';
+        o[key] = [];
         var i =0;
 
-        while(i<reposArray.length){
-
-            return new Promise((resolve, reject)=>{
-
-                var optionGitLanguage = {
-                    host: 'api.github.com',
-                    path: '/repos/' + username + '/' + reposArray[i] + '/languages',
-                    method: 'GET',
-                    headers: {
-                        'user-agent': 'node.js',
-                        'Authorization': 'token '
-                    }
-                };
-    
-                console.log(optionGitLanguage);
-    
-                var request2 = https.request(optionGitLanguage, function (response) {
-    
-                    var body2 = '';
-                    response.on('data', function (chunk) {
-                        body2 += chunk.toString('utf8');
-                    });
-                    response.on('end', function () {
-                        o[key].push(JSON.stringify(body2));
-                    });
-                });
-                request2.end();
-
-            }).then(()=>{
-                i++;
-            });
-        }
-
-    }).then(() => {
-        console.log(o);
-        abc = "abc";
-        console.log("second then: " + JSON.stringify(abc));
-        return abc;
-    });
-
-
-    /*return new Promise((resolve, reject) => {
-        
-
-        //console.log(optionGit.path);
-
-        
-                
-
-                //console.log(reposArray);
-
-                for (var i = 0; i < reposArray.length; i++) {
-
-                    var optionGitLanguage = {
-                        host: 'api.github.com',
-                        path: '/repos/' + username + '/' + reposArray[i] + '/languages',
-                        method: 'GET',
-                        headers: {
-                            'user-agent': 'node.js',
-                            'Authorization': 'token 48284cb2a28e434813ae926bfdedd9f8236aa692'
-                        }
-                    };
-
-                    var o = {};
-                    var key = 'lan';
-                    o[key] = [];
-
-                    var request2 = https.request(optionGitLanguage, function (response) {
-
-                        var body2 = '';
-                        response.on('data', function (chunk) {
-                            body2 += chunk.toString('utf8');
-                        });
-                        response.on('end', function () {
-                            o[key].push(JSON.stringify(body2));
-                            //console.log(JSON.stringify(o));
-                            //repData = JSON.stringify(o);
-                            //repData.emit('update');
-                        });
-                        //console.log(JSON.stringify(o));
-                        //resolve(JSON.stringify(o));
-                    });
-                    request2.end();
-                }
-                //console.log(o.length);
-                console.log(JSON.stringify(o));
-                /*repData.on('update', function () {
-                    console.log(repData);
-                })*/
-    //resolve(repos);
-
-    //});
-
-    //});
-
-    // Bind to the error event so it doesn't get thrown
-    //request.on('error', function (e) {
-    //  reject(e);
-    //});
-
-    //request.end();
-    //});
-
-}
-
-
-
-/*helpers.funCall = (reps, username) => {
-    var arr = [];
-
-    return new Promise((resolve, reject) => {
-        var repos = JSON.stringify(reps);
-        var reposArray = JSON.parse(repos);
-
-        for (var i = 0; i < reposArray.length; i++) {
-
-            helpers.getInfo(reposArray[i], username).then((data) => {
-                var resp = JSON.stringify(data);
-                arr.push(resp);
-            });
-
-
-        }
-        console.log(datares);
-        console.log('arr: ' + arr);
-    });
-
-}
-
-helpers.getInfo = (reps, userName) => {
-    return new Promise((resolve, reject) => {
-
-
-        var o = {};
-
-        var repos = JSON.stringify(reps);
-        var reposArray = JSON.parse(repos);
-
+        var urls=[];
         for (var i = 0; i < reposArray.length; i++) {
 
             var optionGitLanguage = {
                 host: 'api.github.com',
-                path: '/repos/' + userName + '/' + reposArray[i] + '/languages',
+                path: '/repos/' + username + '/' + reposArray[i] + '/languages',
                 method: 'GET',
                 headers: {
                     'user-agent': 'node.js',
-                    'Authorization': 'token 48284cb2a28e434813ae926bfdedd9f8236aa692'
+                    'Authorization': 'token '
                 }
             };
 
+            urls.push(optionGitLanguage);
+        }
 
-            var key = 'lan';
-            o[key] = [];
+        var responses = [];
+        var completed_requests = 0;
 
-            var request2 = https.request(optionGitLanguage, function (response) {
-
+        for (var a=0;a<urls.length;a++) {
+            
+            var request2 = https.request(urls[a], function (response) {
+    
                 var body2 = '';
                 response.on('data', function (chunk) {
                     body2 += chunk.toString('utf8');
                 });
                 response.on('end', function () {
-                    o[key].push(JSON.stringify(body2));
 
+                    responses.push(body2);
+                    completed_requests++;
+                    if (completed_requests == urls.length) {
+                        // All download done, process responses array
+                        console.log(responses);
+                        return responses;
+                    }
                 });
-                //console.log(JSON.stringify(o));
-                //resolve(o);
             });
             request2.end();
         }
 
-        console.log(JSON.stringify(o));
-
-
     });
-}*/
+
+}
 
 module.exports = helpers;
