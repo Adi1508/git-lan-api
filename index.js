@@ -19,22 +19,62 @@ router.use(function (req, res, next) {
     next();
 });
 
-var count = 0;
-
 router.route('/api/:username')
     .get(function (req, res) {
         var userName = req.params.username;
-        console.log(userName);
-        var infoGet;
-        helpers.getRepos(userName).then((reposObject)=>{
-            console.log(reposObject);
-            //infoGet = JSON.stringify(reposObject);
-            //console.log("infoGet : "+ infoGet); 
-            //res.json(JSON.parse(infoGet));
-        }).catch((err)=>{
+
+        helpers.getRepos(userName).then((reposObject) => {
+
+            return reposObject;
+
+        }).then((obj) => {
+
+            var reps = JSON.stringify(obj);
+            var reposArray = JSON.parse(reps);
+
+            var urls = [];
+            for (var i = 0; i < reposArray.length; i++) {
+
+                var optionGitLanguage = {
+                    host: 'api.github.com',
+                    path: '/repos/' + userName + '/' + reposArray[i] + '/languages',
+                    method: 'GET',
+                    headers: {
+                        'user-agent': 'node.js',
+                        'Authorization': 'token '
+                    }
+                };
+
+                urls.push(optionGitLanguage);
+            }
+
+            var responses = [];
+            var completed_requests = 0;
+
+            for (var a = 0; a < urls.length; a++) {
+
+                var request2 = https.request(urls[a], function (response) {
+
+                    var body2 = '';
+                    response.on('data', function (chunk) {
+                        body2 += chunk.toString('utf8');
+                    });
+                    response.on('end', function () {
+
+                        responses.push(body2);
+                        completed_requests++;
+                        if (completed_requests == urls.length) {
+                            // All download done, process responses array
+                            res.json(responses);
+                        }
+                    });
+                });
+                request2.end();
+            }
+
+        }).catch((err) => {
             res.json(err);
         });
-        //console.log('output after helper: '+JSON.parse(infoGet));
     });
 
 router.route('/api')
