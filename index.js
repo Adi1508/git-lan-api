@@ -28,7 +28,6 @@ router.route('/api/:username')
             return reposObject;
 
         }).then((obj) => {
-
             var reps = JSON.stringify(obj);
             var reposArray = JSON.parse(reps);
 
@@ -40,8 +39,8 @@ router.route('/api/:username')
                     path: '/repos/' + userName + '/' + reposArray[i] + '/languages',
                     method: 'GET',
                     headers: {
-                        'user-agent': 'node.js',
-                        'Authorization': 'token 224970f5fee2c66066d67ab9f8584b6d006c6135'
+                        'user-agent': 'node.js'
+                        /*'Authorization': 'token 224970f5fee2c66066d67ab9f8584b6d006c6135'*/
                     }
                 };
 
@@ -60,8 +59,7 @@ router.route('/api/:username')
                         body2 += chunk.toString('utf8');
                     });
                     response.on('end', function () {
-
-                        responses.push(body2);
+                        responses.push(JSON.parse(body2));
                         completed_requests++;
                         if (completed_requests == urls.length) {
                             // All download done, process responses array

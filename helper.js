@@ -12,8 +12,8 @@ helpers.getRepos = (username) => {
             'path': '/users/' + username + '/repos',
             'method': 'GET',
             'headers': {
-                'user-agent': 'node.js',
-                'Authorization': 'token 224970f5fee2c66066d67ab9f8584b6d006c6135'
+                'user-agent': 'node.js'
+                /*'Authorization': 'token 224970f5fee2c66066d67ab9f8584b6d006c6135'*/
             }
         };
 
@@ -23,8 +23,6 @@ helpers.getRepos = (username) => {
             response.on('data', function (chunk) {
                 body += chunk.toString('utf8');
             });
-
-            var finalArray = [];
 
             response.on('end', () => {
                 var obj = JSON.parse(body.toString());
@@ -44,9 +42,7 @@ helpers.getRepos = (username) => {
             });
         });
         request.end();
-
     });
-
 }
 
 module.exports = helpers;
