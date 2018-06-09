@@ -4,7 +4,9 @@ var bodyParser = require('body-parser');
 var https = require('https');
 var Promise = require('promise');
 var helpers = require('./helper');
+var pathView = __dirname + '/public/';
 
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -19,11 +21,14 @@ router.use(function (req, res, next) {
     next();
 });
 
-router.route('/api/:username')
-    .get(function (req, res) {
-        var userName = req.params.username;
+router.route('/home').get((req, res)=>{
+	res.sendFile(pathView + 'index.html');
+});
 
-        helpers.getRepos(userName).then((reposObject) => {
+router.get('/v1/api',function (req, res) {
+        var userName = req.query.param1;
+        var authToken = req.query.param2;
+        helpers.getRepos(userName, authToken).then((reposObject) => {
 
             return reposObject;
 
@@ -39,8 +44,8 @@ router.route('/api/:username')
                     path: '/repos/' + userName + '/' + reposArray[i] + '/languages',
                     method: 'GET',
                     headers: {
-                        'user-agent': 'node.js'
-                        /*'Authorization': 'token '*/ //insert the github auth access token
+                        'user-agent': 'node.js',
+                        'Authorization': 'token '+authToken //insert the github auth access token
                     }
                 };
 
@@ -75,15 +80,15 @@ router.route('/api/:username')
         });
     });
 
-router.route('/api')
+/*router.route('/v')
     .get(function (req, res) {
         res.json({
             message: 'Welcome to git-lan-api, to use the API please pass your username in the url with the API'
         })
-    });
+    });*/
 
 //register the routes
-app.use('/v1', router);
+app.use('/', router);
 
 //starting the server
 app.listen(port);

@@ -1,7 +1,7 @@
 var helpers = {};
 var https = require('https');
 
-helpers.getRepos = (username) => {
+helpers.getRepos = (username, authToken) => {
 
     return new Promise((resolve, reject) => {
 
@@ -12,8 +12,8 @@ helpers.getRepos = (username) => {
             'path': '/users/' + username + '/repos',
             'method': 'GET',
             'headers': {
-                'user-agent': 'node.js'
-                /*'Authorization': 'token '*/ //insert the github auth access token
+                'user-agent': 'node.js',
+                'Authorization': 'token '+authToken //insert the github auth access token
             }
         };
 
