@@ -11,7 +11,7 @@ $('#fetch').click(() => {
             type: 'GET',
             data: data,
             contentType: 'application/json',
-            url: 'http://localhost:8383/v1/api/noauth',
+            url: 'https://git-lan-api.herokuapp.com/v1/api/noauth',
             dataType: 'json',
             success: (result) => {
                 $("#result").empty();
@@ -65,7 +65,7 @@ $('#fetch').click(() => {
             type: 'GET',
             data: data,
             contentType: 'application/json',
-            url: 'http://localhost:8383/v1/api',
+            url: 'https://git-lan-api.herokuapp.com/v1/api',
             dataType: 'json',
             success: (result) => {
                 $("#result").empty();
