@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>webAPI</title>
+    <title>gitLAN</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -37,7 +37,8 @@
     <div class="container">
         <span class="userAuth authenticated pull-right">
         </span>
-        <h1>webAPI</h1>
+        <h1>gitLAN</h1>
+        <h4>The following generates a result of what kind of languages you use and hoe much you use on your github repositories.</h4>
         <hr>
         <div class="row unauthenticated">
             <center>
@@ -59,28 +60,30 @@
 
             <label class='form-group'>Enter Git UserName</label>
             <div class="form-group">
-                <input type="text" class="form-control" id="username" placeholder="Search">
+                <input type="text" class="form-control" id="username" placeholder="Enter Username" maxlength="25">
             </div>
 
-            <label class='form-group'>Enter Git Personal Access Token</label>
+            <label class='form-group'>Enter Git Personal Access Token <p style="color:red"> Enter Token only if you want to generate the result again and again in short time </p></label>
             <div class="form-group">
-                <input type="text" class="form-control" id="token" placeholder="Search">
-                <label class='form-group'><a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">Click the following link for more details.</a></label>
+                <input type="password" class="form-control" id="token" placeholder="Enter Token" maxlength="50">
+                <label class='form-group'>
+                    <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">How to generate Token?</a>
+                </label>
             </div>
 
-            <button type="button" class="btn btn-default" id="fetch">Fetch Data</button>
+            <button type="button" class="btn btn-default" id="fetch">Generate Result</button>
+
+            <div class="panel-body">
+                <ul class="list-group" id="result">
+
+                </ul>
+            </div>
         </div>
 
         <div class='col-sm-4'>
         </div>
 
     </div>
-
-    <div class="panel-body">
-            <ul class="list-group" id="result">
-
-            </ul>
-        </div>
 
 </body>
 
