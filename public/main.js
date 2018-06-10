@@ -4,7 +4,7 @@ $('#fetch').click(() => {
 
     if (token === null || undefined === token || token === '') {
 
-        var data = {};
+        /*var data = {};
         data.param1 = username;
 
         $.ajax({
@@ -54,7 +54,9 @@ $('#fetch').click(() => {
                 }
                 $('#result').append(items2.join(''));
             }
-        });
+        });*/
+
+        alert('Please enter the auth token.');
 
     } else {
         var data = {};
