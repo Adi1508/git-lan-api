@@ -108,7 +108,20 @@ $('#fetch').click(() => {
                 for (var g = 0; g < lan.length; g++) {
                     items2.push('<li class="list-group-item">' + lan[g] + '<span class="badge">' + Math.round((count[g] / countSum) * 100) + ' % </span></li>');
                 }
-                $('#result').append(items2.join(''));
+
+                var perc = [];
+                for(var t = 0; t<count.length; t++){
+                    perc[t] = Math.round((count[t] / countSum) * 100);
+                }
+                //$('#result').append(items2.join(''));
+
+                var data = [{
+                    x: lan,
+                    y: perc,
+                    type: 'bar'
+                  }];
+                  
+                Plotly.newPlot('res', data);
             }
         });
     }
