@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,31 +8,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!--<link rel="stylesheet" href="http://localhost:8888/css/style.css" type="text/css">-->
-
     <style type="text/css">
         #contacts p,
         #contacts p.lead {
             margin: 0;
         }
-
         .authenticated {
             display: block;
             margin-top: 20px;
             margin-bottom: 10px;
         }
-
         .unauthenticated {
             display: none;
         }
-
         .modal-header:last-child {
             border-bottom: 0;
         }
     </style>
 </head>
-
 <body data-gr-c-s-loaded="true" class="">
-
     <div class="container">
         <span class="userAuth authenticated pull-right">
         </span>
@@ -51,18 +44,14 @@
             </div>
         </div>
     </div>
-
     <div class='row'>
         <div class='col-sm-4'>
         </div>
-
         <div class='col-sm-4'>
-
             <label class='form-group'>Enter Git UserName</label>
             <div class="form-group">
                 <input type="text" class="form-control" id="username" placeholder="Enter Username" maxlength="25">
             </div>
-
             <label class='form-group'>Enter Git Personal Access Token</label>
             <div class="form-group">
                 <input type="password" class="form-control" id="token" placeholder="Enter Token" maxlength="50">
@@ -70,30 +59,21 @@
                     <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">How to generate Token?</a>
                 </label>
             </div>
-
             <button type="button" class="btn btn-default" id="fetch">Generate Result</button>
-
             <div class="panel-body">
                 <ul class="list-group" id="result">
-
                 </ul>
             </div>
-
             <div id = 'res'></div>
         </div>
-
         <div class='col-sm-4'>
         </div>
-
     </div>
-
 </body>
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script async src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script src='https://git-lan-api.herokuapp.com/main.js' type='text/javascript' language="JavaScript"></script>
-
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script async src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script async src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script async src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src='https://git-lan-api.herokuapp.com/main.js' type='text/javascript' language="JavaScript"></script>
 </html>
