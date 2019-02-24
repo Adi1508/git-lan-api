@@ -1,0 +1,27 @@
+{
+    "development": {
+        "config_id": "development",
+        "app_name": "knowyourgit",
+        "app_desc": "knowyourgit desc",
+        "node_port": 8383,
+        "json_indentation": 4,
+        "database": "",
+        "url": "http://localhost:8383"
+    },
+    "testing": {
+        "config_id": "testing",
+        "database": ""
+    },
+    "staging": {
+        "config_id": "staging",
+        "url": "https://knowyourgit.herokuapp.com",
+        "node_port": 8383,
+        "database": ""
+    },
+    "production": {
+        "config_id": "production",
+        "url": "https://knowyourgit.herokuapp.com",
+        "node_port": 8383,
+        "database": ""
+    }
+}

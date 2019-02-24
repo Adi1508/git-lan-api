@@ -17,12 +17,10 @@ $('#fetch').click(() => {
             url: '/showResult',
             dataType: 'json',
             success: (result) => {
-                console.log(result);
                 $("#result").empty();
                 var returnMovies = JSON.stringify(result);
                 var items2 = [];
                 var jsonData = JSON.parse(returnMovies);
-                console.log('jsondata ' + JSON.stringify(jsonData));
                 var finalData = [];
                 for (var i = 0; i < jsonData.length; i++) {
                     var counter = Object.keys(jsonData[i]);

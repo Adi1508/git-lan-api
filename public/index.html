@@ -1,11 +1,12 @@
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>gitLAN</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <title>knowyourgit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!--<link rel="stylesheet" href="http://localhost:8888/css/style.css" type="text/css">-->
     <style type="text/css">
@@ -13,67 +14,78 @@
         #contacts p.lead {
             margin: 0;
         }
+
         .authenticated {
             display: block;
             margin-top: 20px;
             margin-bottom: 10px;
         }
+
         .unauthenticated {
             display: none;
         }
+
         .modal-header:last-child {
             border-bottom: 0;
         }
     </style>
 </head>
+
 <body data-gr-c-s-loaded="true" class="">
     <div class="container">
         <span class="userAuth authenticated pull-right">
         </span>
-        <h1>gitLAN</h1>
+        <h1>Know your Git</h1>
         <h4>Generating a relevant information about your GitHub profile.</h4>
         <hr>
-        <div class="row unauthenticated">
-            <center>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addContactModal">Add Contact</button>
-            </center>
-            <div class="col-md-6">
-                <ul id="contacts" class="list-group">
-                    <!-- Conatct Object li.list-group-item.contact will be added here by js -->
-                </ul>
-            </div>
-        </div>
     </div>
     <div class='row'>
-        <div class='col-sm-4'>
+        <div class='col-sm-3'>
         </div>
-        <div class='col-sm-4'>
-            <label class='form-group'>Enter Git UserName</label>
-            <div class="form-group">
-                <input type="text" class="form-control" id="username" placeholder="Enter Username" maxlength="25">
-            </div>
-            <label class='form-group'>Enter Git Personal Access Token</label>
-            <div class="form-group">
-                <input type="password" class="form-control" id="token" placeholder="Enter Token" maxlength="50">
-                <label class='form-group'>
-                    <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">How to generate Token?</a>
-                </label>
-            </div>
-            <button type="button" class="btn btn-default" id="fetch">Generate Result</button>
-            <div class="panel-body">
-                <ul class="list-group" id="result">
-                </ul>
-            </div>
-            <div id = 'res'></div>
+        <div class='col-sm-6'>
+            <form style="padding:12px">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Enter Git UserName</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter Username"
+                            maxlength="25">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Enter Git Personal Access Token</label>
+                        <input type="password" class="form-control" id="token" placeholder="Enter Token" maxlength="50">
+                        <label class='form-group'>
+                            <a
+                                href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">How
+                                to generate Token?</a>
+                        </label>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="fetch">Generate Result</button>
+                <div class="panel-body">
+                    <ul class="list-group" id="result">
+                    </ul>
+                </div>
+            </form>
+            <div id='res'></div>
         </div>
-        <div class='col-sm-4'>
+        <div class='col-sm-3'>
         </div>
     </div>
+
 </body>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script async src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script async src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script async src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src='https://git-lan-api.herokuapp.com/main.js' type='text/javascript' language="JavaScript"></script>
+<script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script async src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script async src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script async src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script async src='./main.js' type='text/javascript' language="JavaScript"></script>
+<!-- <script async src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script> -->
+<!-- <script async src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script> -->
+<!-- <script async src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script> -->
+
 </html>

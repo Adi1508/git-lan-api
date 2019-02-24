@@ -13,7 +13,7 @@ helpers.getRepos = (username, authToken) => {
             'method': 'GET',
             'headers': {
                 'user-agent': 'node.js',
-                'Authorization': 'token '+authToken //insert the github auth access token
+                'Authorization': 'token ' + authToken //insert the github auth access token
             }
         };
 
