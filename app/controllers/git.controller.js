@@ -1,6 +1,7 @@
 exports.getData = (req, res) => {
 
     const helpers = require('../helpers/git.helper.js');
+    var https = require('https');
     console.log('inside git.controller.js');
     var userName = req.query.param1;
     var authToken = req.query.param2;
@@ -9,7 +10,6 @@ exports.getData = (req, res) => {
     }).then((obj) => {
         var reps = JSON.stringify(obj);
         var reposArray = JSON.parse(reps);
-        //console.log(reps + ' ' + reposArray);
         var urls = [];
         for (var i = 0; i < reposArray.length; i++) {
             var optionGitLanguage = {
@@ -23,7 +23,7 @@ exports.getData = (req, res) => {
             };
             urls.push(optionGitLanguage);
         }
-        console.log(urls.length);
+        console.log("repos found : " + urls.length);
         var responses = [];
         var completed_requests = 0;
         for (var a = 0; a < urls.length; a++) {
@@ -32,13 +32,10 @@ exports.getData = (req, res) => {
                 response.on('data', function (chunk) {
                     body2 += chunk.toString('utf8');
                 });
-                console.log(body);
                 response.on('end', function () {
                     responses.push(JSON.parse(body2));
                     completed_requests++;
-                    console.log(completed_requests);
                     if (completed_requests == urls.length) {
-                        console.log(JSON.parse(responses));
                         // All download done, process responses array
                         res.json(responses);
                     }

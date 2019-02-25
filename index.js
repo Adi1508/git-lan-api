@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var https = require('https');
+
 var Promise = require('promise');
 //var helpers = require('./helper');
 var pathView = __dirname + '/public/';
