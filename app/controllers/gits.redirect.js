@@ -1,3 +1,6 @@
+const configjs = require('./config/config.js');
+var config = configjs.config();
+
 exports.redirect = (req, res) => {
     const code = req.query.code;
     const returnedState = req.query.state;
@@ -7,10 +10,10 @@ exports.redirect = (req, res) => {
                 url:
                     'https://github.com/login/oauth/access_token?' +
                     qs.stringify({
-                        client_id: process.env.CLIENT_ID,
-                        client_secret: process.env.CLIENT_SECRET,
+                        client_id: config.clientID,
+                        client_secret: config.clientSecret,
                         code: code,
-                        redirect_uri: redirect_uri,
+                        redirect_uri: config.redirectURL,
                         state: req.session.csrf_string
                     })
             },

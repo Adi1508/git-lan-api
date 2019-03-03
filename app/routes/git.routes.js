@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     app.get('/login', gits.getLogin);
 
-    app.get('/redirect', gits.redirect);
+    app.all('/redirect', gits.redirect);
 
     app.get('/user', gits.user);
 

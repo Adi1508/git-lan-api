@@ -6,7 +6,10 @@
         "node_port": 8383,
         "json_indentation": 4,
         "database": "",
-        "url": "http://localhost:8383"
+        "url": "http://localhost:8383",
+        "clientID": "c66b688038ffcc243c10",
+        "clientSecret": "4e2712e19513c6c9197c2956e8d12db00a346f6e",
+        "redirectURL": "http://localhost:8383/redirect"
     },
     "testing": {
         "config_id": "testing",
@@ -22,6 +25,9 @@
         "config_id": "production",
         "url": "https://knowyourgit.herokuapp.com",
         "node_port": 8383,
-        "database": ""
+        "database": "",
+        "clientID": "c66b688038ffcc243c10",
+        "clientSecret": "4e2712e19513c6c9197c2956e8d12db00a346f6e",
+        "redirectURL": "http://knowyourgit.herokuapp.com/redirect"
     }
 }
