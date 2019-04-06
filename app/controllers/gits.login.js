@@ -1,10 +1,10 @@
-const configjs = require('./config/config.js');
+const configjs = require('./../../config/config.js');
 var config = configjs.config();
 const randomString = require('randomstring');
 const qs = require('querystring');
 
 exports.getLogin = (req, res) => {
-    req.session.csrf_string = randonString.generate();
+    req.session.csrf_string = randomString.generate();
     const githubAuthUrl = 'https://github.com/login/oauth/authorize?' +
         qs.stringify({
             client_id: config.clientID,

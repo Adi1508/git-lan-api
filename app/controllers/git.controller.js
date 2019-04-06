@@ -1,7 +1,7 @@
-exports.getData = (req, res) => {
+const helpers = require('../helpers/git.helper.js');
+var https = require('https');
 
-    const helpers = require('../helpers/git.helper.js');
-    var https = require('https');
+exports.getData = (req, res) => {
     console.log('inside git.controller.js');
     var userName = req.query.param1;
     var authToken = req.query.param2;

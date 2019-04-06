@@ -1,4 +1,4 @@
-const configjs = require('./config/config.js');
+const configjs = require('./../../config/config.js');
 var config = configjs.config();
 
 exports.redirect = (req, res) => {

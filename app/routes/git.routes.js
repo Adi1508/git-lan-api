@@ -1,12 +1,16 @@
+var express = require('express');
+var router = express.Router();
+const result = require('../controllers/git.controller.js');
+const login = require('../controllers/gits.user');
+const redirect = require('../controllers/gits.redirect')
+const user = require('../controllers/gits.user')
+
 module.exports = (app) => {
-    const gits = require('../controllers/git.controller.js');
+    app.use('/showResult', result.getData);
 
-    app.get('/showResult', gits.getData);
+    //app.use('/login', login.getLogin);
 
-    app.get('/login', gits.getLogin);
+    //app.use('/redirect', redirect.redirect);
 
-    app.all('/redirect', gits.redirect);
-
-    app.get('/user', gits.user);
-
+    //app.use('/user', user.user);
 }
