@@ -39,6 +39,7 @@ app.use(
 
 app.get('/login', (req, res, next) => {
     req.session.csrf_string = randomString.generate();
+    console.log('/login : ' + req.session.access_token);
     const githubAuthUrl = 'https://github.com/login/oauth/authorize?' +
         qs.stringify({
             client_id: config.clientID,
@@ -68,6 +69,7 @@ app.all('/redirect', (req, res) => {
             },
             (error, response, body) => {
                 req.session.access_token = qs.parse(body).access_token;
+                console.log('/redirect : ' + qs.parse(body).access_token);
                 res.redirect('/user');
             }
         );
@@ -86,6 +88,7 @@ app.get('/user', (req, res) => {
             }
         },
         (error, response, body) => {
+            console.log('/user : ' + req.session.access_token);
             res.send(
                 "<p>You're logged in! Here's all your emails on GitHub: </p>" +
                 body +
