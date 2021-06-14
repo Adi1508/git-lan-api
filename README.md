@@ -1,7 +1,7 @@
-# git-lan-api
+# knowyourgit
 
-The API lets users find out their repository language information and the percentage of languages they use.
+The APP lets users find out their repository language information and the percentage of languages they use.
 
-The API can be used easily just by passing the username of your github account and rest all of the information will be fetched accordingly.
+The APP can be used easily just by passing the username of your github account and rest all of the information will be fetched accordingly.
 
-The API is hosted at : https://knowyourgit.herokuapp.com/
+The APP is hosted at : https://knowyourgit.herokuapp.com/
