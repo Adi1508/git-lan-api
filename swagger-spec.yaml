@@ -1,0 +1,47 @@
+swagger: "2.0"
+info:
+  description: "Knowyourgit API Server"
+  version: "1.0.0"
+  title: "Knowyourgit"
+  contact:
+    email: "adityak007mr@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/api/v1"
+tags:
+- name: "showData"
+  description: "Returns the final Result"
+schemes:
+- "https"
+- "http"
+paths:
+  /getData/{username}:
+  /healthCheck:
+    get:
+      tags:
+      - "healthCheck"
+      summary: "Does the health check of the server"
+      description: "Does the health check of the server"
+      operationId: "findDataByUserName"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/HealthCheckResponse"
+        "400":
+          description: "Invalid status value"
+definitions:
+  HealthCheckResponse:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+      status:
+        type: "integer"
+        format: "int32"

@@ -22,6 +22,7 @@ func main() {
 	r := mux.NewRouter()
 	apiRouterV1 := r.PathPrefix("/api/v1").Subrouter()
 	apiRouterV1.HandleFunc("/healthCheck", handlers.HealthCheck).Methods("GET")
+	apiRouterV1.HandleFunc("/getData/{username}", handlers.GetData).Methods("GET")
 	homeRouter := r.PathPrefix("/home").Subrouter()
 	homeRouter.HandleFunc("/", handlers.HomeHandler).Methods("GET")
 
