@@ -32,4 +32,6 @@ func GetData(w http.ResponseWriter, r *http.Request) {
 	username := params["username"]
 	reposList := helpers.FetchRepos(username)
 	log.Println(reposList)
+	languageList := helpers.LanguageData(username, reposList)
+	log.Println(languageList)
 }

@@ -2,7 +2,6 @@ package helpers
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 
 	"knowyourgit/models"
@@ -13,16 +12,15 @@ var (
 	repoArray []models.RepoData
 )
 
-func FetchRepos(username string) string {
+func FetchRepos(username string) []models.RepoData {
 	reqUrl := "https://api.github.com/users/" + username + "/repos"
 	response := services.MakeCall(reqUrl)
 	if err := json.Unmarshal(response, &repoArray); err != nil {
 		log.Fatalf("Unmarshal Error: %s\n", err)
 	}
-	for _, value := range repoArray {
-		log.Println(value.Name)
-		break
-	}
+	return repoArray
+}
 
-	return fmt.Sprintf("hello")
+func languageList(username string, repoData []models.RepoData) {
+
 }
