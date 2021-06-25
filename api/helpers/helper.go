@@ -10,37 +10,34 @@ import (
 
 var (
 	repoArray    []models.RepoData
-	languageList []models.LanguageData
+	languageList []map[string]interface{}
 )
 
-func FetchRepos(username string) []models.RepoData {
+func FetchRepos(username string, token string) []models.RepoData {
 	reqUrl := "https://api.github.com/users/" + username + "/repos"
-	response := services.MakeCall(reqUrl)
+	response := services.MakeCall(reqUrl, token)
 	if err := json.Unmarshal(response, &repoArray); err != nil {
 		log.Fatalf("Unmarshal Error: %s\n", err)
 	}
 	return repoArray
 }
 
-func LanguageData(username string, repoData []models.RepoData) string {
-
-	// WIP
+func LanguageData(username string, repoData []models.RepoData, token string) []map[string]interface{} {
 	for _, value := range repoData {
 		data := make(chan []byte)
 		targetURL := "https://api.github.com/repos/" + username + "/" + value.Name + "/languages"
-		go process(data, targetURL)
+		go process(data, targetURL, token)
 		response := <-data
-		var lanObj models.LanguageData
+		var lanObj map[string]interface{}
 		if err := json.Unmarshal(response, &lanObj); err != nil {
 			log.Fatalf("Error during unmarshal response: %s\n", err)
 		}
 		languageList = append(languageList, lanObj)
 	}
-	log.Println(languageList)
-	return "WIP"
+	return languageList
 }
 
-func process(data chan<- []byte, targetURL string) {
-	response := services.MakeCall(targetURL)
+func process(data chan<- []byte, targetURL string, token string) {
+	response := services.MakeCall(targetURL, token)
 	data <- response
 }

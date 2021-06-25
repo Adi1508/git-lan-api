@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"knowyourgit/api/helpers"
 	"knowyourgit/models"
@@ -27,11 +28,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetData(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Invoking : %s\n", r.URL.Path)
+	start := time.Now()
 	params := mux.Vars(r)
 	username := params["username"]
-	reposList := helpers.FetchRepos(username)
-	log.Println(reposList)
-	languageList := helpers.LanguageData(username, reposList)
-	log.Println(languageList)
+	token := params["token"]
+	reposList := helpers.FetchRepos(username, token)
+	languageList := helpers.LanguageData(username, reposList, token)
+	log.Printf("Request Complete in : %v\n", time.Since(start))
+	json.NewEncoder(w).Encode(languageList)
 }
