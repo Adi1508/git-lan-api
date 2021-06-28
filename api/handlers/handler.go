@@ -23,10 +23,6 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(healthCheckResponse)
 }
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("loading home: %s\n", r.URL.Path)
-}
-
 func GetData(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 	params := mux.Vars(r)

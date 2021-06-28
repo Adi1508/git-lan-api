@@ -2,32 +2,36 @@ package main
 
 import (
 	"context"
+	"embed"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"path"
+	"strings"
 	"syscall"
 	"time"
 
 	"knowyourgit/api/handlers"
-
-	"github.com/gorilla/mux"
 )
+
+//go:embed public/build
+var content embed.FS
 
 func main() {
 	log.Println("Starting up the App Server!")
 
 	// TODO : Add Schemes (http, https)
 
-	r := mux.NewRouter()
-	apiRouterV1 := r.PathPrefix("/api/v1").Subrouter()
-	apiRouterV1.HandleFunc("/healthCheck", handlers.HealthCheck).Methods("GET")
-	apiRouterV1.HandleFunc("/getData/{username}/{token}", handlers.GetData).Methods("GET")
-	homeRouter := r.PathPrefix("/home").Subrouter()
-	homeRouter.HandleFunc("/", handlers.HomeHandler).Methods("GET")
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/", rootHandler)
+	mux.HandleFunc("/api/v1/healthCheck", handlers.HealthCheck)
+	mux.HandleFunc("/api/v1/getData/{username}/{token}", handlers.GetData)
 
 	srv := &http.Server{
-		Handler:      r,
+		Handler:      mux,
 		Addr:         ":9090",
 		ReadTimeout:  20 * time.Second,
 		WriteTimeout: 20 * time.Second,
@@ -41,6 +45,21 @@ func main() {
 	}()
 
 	waitForShutDown(srv)
+}
+
+func rootHandler(w http.ResponseWriter, req *http.Request) {
+	upath := req.URL.Path
+	if !strings.HasPrefix(upath, "/") {
+		upath = "/" + upath
+		req.URL.Path = upath
+	}
+	upath = path.Clean(upath)
+	fsys := fs.FS(content)
+	contentStatic, _ := fs.Sub(fsys, "public/build")
+	if _, err := contentStatic.Open(strings.TrimLeft(upath, "/")); err != nil {
+		req.URL.Path = "/"
+	}
+	http.FileServer(http.FS(contentStatic)).ServeHTTP(w, req)
 }
 
 func waitForShutDown(srv *http.Server) {
