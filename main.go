@@ -18,7 +18,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//go:embed public/build
+//go:embed client/build
 var content embed.FS
 
 func main() {
@@ -55,8 +55,8 @@ func rootHandler(c *gin.Context) {
 	}
 	upath = path.Clean(upath)
 	fsys := fs.FS(content)
-	contentStatic, _ := fs.Sub(fsys, "public/build")
-	if _, err := contentStatic.Open(strings.TrimLeft(upath, "/")); err != nil {
+	contentStatic, _ := fs.Sub(fsys, "client/build")
+	if _, err := contentStatic.Open(strings.Replace(upath, "/home", "", -1)); err != nil {
 		c.Request.URL.Path = "/"
 	}
 	http.FileServer(http.FS(contentStatic)).ServeHTTP(c.Writer, c.Request)
