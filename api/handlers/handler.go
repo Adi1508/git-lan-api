@@ -6,24 +6,23 @@ import (
 
 	"knowyourgit/api/helpers"
 	"knowyourgit/models"
-
-	"github.com/gin-gonic/gin"
 )
 
 var (
 	healthCheckResponse models.HealthCheckResponse
 )
 
-func HealthCheck(c *gin.Context) {
+func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	healthCheckResponse.Message = "Server is up and running"
 	healthCheckResponse.Status = http.StatusOK
-	json.NewEncoder(c.Writer).Encode(healthCheckResponse)
+	json.NewEncoder(w).Encode(healthCheckResponse)
 }
 
-func GetData(c *gin.Context) {
-	username := c.Query("username")
-	token := c.Request.Header.Get("token")
+func GetData(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	username := query["username"][0]
+	token := r.Header.Get("token")
 	reposList := helpers.FetchRepos(username, token)
 	languageList := helpers.LanguageData(username, reposList, token)
-	json.NewEncoder(c.Writer).Encode(languageList)
+	json.NewEncoder(w).Encode(languageList)
 }

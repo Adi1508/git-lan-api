@@ -7,6 +7,6 @@ require('dotenv').config()
 
 render((<BrowserRouter>
     <Switch>
-      <Route path={process.env.REACT_APP_PUBLIC_URL + "/"} component={App} />
+      <Route component={App} />
     </Switch>
 </BrowserRouter>), document.getElementById('root'))

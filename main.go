@@ -14,8 +14,6 @@ import (
 	"time"
 
 	"knowyourgit/api/handlers"
-
-	"github.com/gin-gonic/gin"
 )
 
 //go:embed client/build
@@ -24,13 +22,13 @@ var content embed.FS
 func main() {
 	log.Println("Starting up the App Server!")
 
-	router := gin.Default()
-	router.GET("/api/v1/healthCheck", handlers.HealthCheck)
-	router.GET("api/v1/getData", handlers.GetData)
-	router.GET("/home/*action", rootHandler)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", rootHandler)
+	mux.HandleFunc("/api/v1/healthCheck", handlers.HealthCheck)
+	mux.HandleFunc("/api/v1/getData", handlers.GetData)
 
 	srv := &http.Server{
-		Handler:      router,
+		Handler:      mux,
 		Addr:         ":9090",
 		ReadTimeout:  20 * time.Second,
 		WriteTimeout: 20 * time.Second,
@@ -46,20 +44,19 @@ func main() {
 	waitForShutDown(srv)
 }
 
-func rootHandler(c *gin.Context) {
-	log.Println("Serving Content")
-	upath := c.Request.URL.Path
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	upath := r.URL.Path
 	if !strings.HasPrefix(upath, "/") {
 		upath = "/" + upath
-		c.Request.URL.Path = upath
+		r.URL.Path = upath
 	}
 	upath = path.Clean(upath)
 	fsys := fs.FS(content)
 	contentStatic, _ := fs.Sub(fsys, "client/build")
-	if _, err := contentStatic.Open(strings.Replace(upath, "/home", "", -1)); err != nil {
-		c.Request.URL.Path = "/"
+	if _, err := contentStatic.Open(strings.TrimLeft(upath, "/")); err != nil {
+		r.URL.Path = "/"
 	}
-	http.FileServer(http.FS(contentStatic)).ServeHTTP(c.Writer, c.Request)
+	http.FileServer(http.FS(contentStatic)).ServeHTTP(w, r)
 }
 
 func waitForShutDown(srv *http.Server) {
