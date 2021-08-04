@@ -4,7 +4,7 @@ import (
 	"context"
 	"embed"
 	"io/fs"
-	"log"
+	"knowyourgit/api/handlers"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,14 +13,16 @@ import (
 	"syscall"
 	"time"
 
-	"knowyourgit/api/handlers"
+	"go.appmanch.org/commons/logging"
 )
+
+var logger = logging.GetLogger()
 
 //go:embed client/build
 var content embed.FS
 
 func main() {
-	log.Println("Starting up the App Server!")
+	logger.Info("Starting up the App Server!")
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", rootHandler)
@@ -35,9 +37,9 @@ func main() {
 	}
 
 	go func() {
-		log.Println("Server Started")
+		logger.Info("Server Started")
 		if err := srv.ListenAndServe(); err != nil {
-			log.Fatalln(err)
+			logger.Error(err)
 		}
 	}()
 
@@ -66,6 +68,6 @@ func waitForShutDown(srv *http.Server) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 	srv.Shutdown(ctx)
-	log.Println("Shutting Down")
+	logger.Info("Shutting Down")
 	os.Exit(0)
 }
